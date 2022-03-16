@@ -158,7 +158,7 @@
     "properties": {
       "publisher": "Microsoft.Compute",
       "type": "CustomScriptExtension",
-      "typeHandlerVersion": "1.10",
+      "typeHandlerVersion": "1.4",
       "autoUpgradeMinorVersion": false,
       "settings": {
         "commandToExecute": "powershell.exe -executionpolicy unrestricted -encodedcommand UwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwAVwBvAHcANgA0ADMAMgBOAG8AZABlAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQAOwANAAoAUwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQA"
@@ -182,7 +182,7 @@
             "publisher": "Microsoft.Compute",
             "type": "CustomScriptExtension",
             // "forceUpdateTag": "1.0.1",
-            "typeHandlerVersion": "1.10",
+            "typeHandlerVersion": "1.4",
             "autoUpgradeMinorVersion": false,
             "settings": {
               "fileUris": [
