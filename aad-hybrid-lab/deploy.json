@@ -4,7 +4,7 @@
   "parameters": {
     "assetLocation": {
       "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/Microsoft/aad-hybrid-lab/master/aad-hybrid-lab/",
+      "defaultValue": "https://raw.githubusercontent.com/chrisdowningau/aad-hybrid-lab/fix-tls-error/aad-hybrid-lab/",
       "metadata": { "description": "This is the location in which all the linked templates are stored." }
     },
     "adminUsername": {
@@ -186,27 +186,7 @@
         }
       }
     },
-    {
-    "name": "[concat(variables('adVMName'), '/UpdateNETFXSChannelSettings')]",
-    "type": "Microsoft.Compute/virtualMachines/extensions",
-    "location": "[resourceGroup().location]",
-    "apiVersion": "2015-06-15",
-    "dependsOn": [
-      "virtualNetworkDNSUpdate"
-    ],
-    "tags": {
-      "displayName": "UpdateNETFXSChannelSettings"
-    },
-    "properties": {
-      "publisher": "Microsoft.Compute",
-      "type": "CustomScriptExtension",
-      "typeHandlerVersion": "1.10",
-      "autoUpgradeMinorVersion": true,
-      "settings": {
-        "commandToExecute": "powershell.exe -executionpolicy unrestricted -encodedcommand UwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwAVwBvAHcANgA0ADMAMgBOAG8AZABlAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQAOwANAAoAUwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQA"
-      }
-    }
-    },
+    
     {
       "name": "[concat(variables('adVMName'),'/Microsoft.Powershell.DSC')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
