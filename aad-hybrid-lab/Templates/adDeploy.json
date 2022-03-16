@@ -144,27 +144,6 @@
         }
       },
       "resources": [
-{
-    "name": "[concat(parameters('adVMName'), '/UpdateNETFXSChannelSettings')]",
-    "type": "Microsoft.Compute/virtualMachines/extensions",
-    "location": "[resourceGroup().location]",
-    "apiVersion": "2015-06-15",
-    "dependsOn": [
-      "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('adVMName')))]"
-    ],
-    "tags": {
-      "displayName": "UpdateNETFXSChannelSettings"
-    },
-    "properties": {
-      "publisher": "Microsoft.Compute",
-      "type": "CustomScriptExtension",
-      "typeHandlerVersion": "1.4",
-      "autoUpgradeMinorVersion": false,
-      "settings": {
-        "commandToExecute": "powershell.exe -executionpolicy unrestricted -encodedcommand UwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwAVwBvAHcANgA0ADMAMgBOAG8AZABlAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQAOwANAAoAUwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQA"
-      }
-    }
-    },
         {
           
           "name": "DeployAD",
@@ -172,7 +151,6 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "UpdateNETFXSChannelSettings",
             "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('adVMName')))]"
           ],
           "tags": {
@@ -188,7 +166,17 @@
               "fileUris": [
                 "[variables('DeployADTemplateUri')]"
               ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('DeployADTemplate'), ' ', parameters('adDomainName'), ' ', parameters('adminPassword'))]"
+              // "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('DeployADTemplate'), ' ', parameters('adDomainName'), ' ', parameters('adminPassword'))]"
+
+// Added encodedCommand which is an embedded script that sets the .NET Schannel settings then calls the original deployAD script and passes through the params
+// $command = 'param($DeployADTemplate,$adDomainName,$adminPassword)Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NetFramework\v4.0.30319" -Name SchUseStrongCrypto -Value 1 -Type DWord;Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319" -Name SchUseStrongCrypto -Value 1 -Type DWord;powershell -ExecutionPolicy Unrestricted -File $DeployADTemplate $adDomainName $adminPassword'
+// # To use the -EncodedCommand parameter:
+// #$command = 'dir "c:\program files" '
+// $bytes = [System.Text.Encoding]::Unicode.GetBytes($command)
+// $encodedCommand = [Convert]::ToBase64String($bytes)
+// #powershell.exe -encodedCommand $encodedCommand
+
+               "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -encodedcommand', 'cABhAHIAYQBtACgAJABEAGUAcABsAG8AeQBBAEQAVABlAG0AcABsAGEAdABlACwAJABhAGQARABvAG0AYQBpAG4ATgBhAG0AZQAsACQAYQBkAG0AaQBuAFAAYQBzAHMAdwBvAHIAZAApAFMAZQB0AC0ASQB0AGUAbQBQAHIAbwBwAGUAcgB0AHkAIAAtAFAAYQB0AGgAIAAiAEgASwBMAE0AOgBcAFMATwBGAFQAVwBBAFIARQBcAFcAbwB3ADYANAAzADIATgBvAGQAZQBcAE0AaQBjAHIAbwBzAG8AZgB0AFwALgBOAGUAdABGAHIAYQBtAGUAdwBvAHIAawBcAHYANAAuADAALgAzADAAMwAxADkAIgAgAC0ATgBhAG0AZQAgAFMAYwBoAFUAcwBlAFMAdAByAG8AbgBnAEMAcgB5AHAAdABvACAALQBWAGEAbAB1AGUAIAAxACAALQBUAHkAcABlACAARABXAG8AcgBkADsAUwBlAHQALQBJAHQAZQBtAFAAcgBvAHAAZQByAHQAeQAgAC0AUABhAHQAaAAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwATQBpAGMAcgBvAHMAbwBmAHQAXAAuAE4AZQB0AEYAcgBhAG0AZQB3AG8AcgBrAFwAdgA0AC4AMAAuADMAMAAzADEAOQAiACAALQBOAGEAbQBlACAAUwBjAGgAVQBzAGUAUwB0AHIAbwBuAGcAQwByAHkAcAB0AG8AIAAtAFYAYQBsAHUAZQAgADEAIAAtAFQAeQBwAGUAIABEAFcAbwByAGQAOwBwAG8AdwBlAHIAcwBoAGUAbABsACAALQBFAHgAZQBjAHUAdABpAG8AbgBQAG8AbABpAGMAeQAgAFUAbgByAGUAcwB0AHIAaQBjAHQAZQBkACAALQBGAGkAbABlACAAJABEAGUAcABsAG8AeQBBAEQAVABlAG0AcABsAGEAdABlACAAJABhAGQARABvAG0AYQBpAG4ATgBhAG0AZQAgACQAYQBkAG0AaQBuAFAAYQBzAHMAdwBvAHIAZAA=' ,variables('DeployADTemplate'), ' ', parameters('adDomainName'), ' ', parameters('adminPassword'))]"
             }
           }
         }
