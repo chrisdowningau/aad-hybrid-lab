@@ -172,7 +172,8 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "UpdateNETFXSChannelSettings"
+            "UpdateNETFXSChannelSettings",
+            "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('adVMName')))]"
           ],
           "tags": {
             "displayName": "DeployAD"
