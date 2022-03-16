@@ -181,7 +181,7 @@
             "publisher": "Microsoft.Compute",
             "type": "CustomScriptExtension",
             "forceUpdateTag": "1.0.1",
-            "typeHandlerVersion": "1.4",
+            "typeHandlerVersion": "1.10",
             "autoUpgradeMinorVersion": false,
             "settings": {
               "fileUris": [

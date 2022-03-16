@@ -193,7 +193,7 @@
       "location": "[variables('location')]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "UpdateNETFXSChannelSettings"
+        "virtualNetworkDNSUpdate"
       ],
       "tags": {
         "displayName": "adDSC"
