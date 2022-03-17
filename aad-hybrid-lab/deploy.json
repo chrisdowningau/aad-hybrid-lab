@@ -89,7 +89,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "adSubnetName": "[concat('adSubnet', parameters('deploymentNumber'))]",
     "adSubnetID": "[concat(variables('vnetID'),'/subnets/',variables('adSubnetName'))]",
-    "adTemplateURI": "[concat(parameters('assetLocation'),'Templates/adDeploy.json')]",
+    "adTemplateURI": "[concat(parameters('assetLocation'),'Templates/adDeploy-test.json')]",
     "imageOffer": "WindowsServer",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageSKU": "2012-R2-Datacenter",
