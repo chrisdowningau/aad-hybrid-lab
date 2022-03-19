@@ -150,7 +150,7 @@
          "name":"[concat(parameters('adVMName'),'/firstRunCommand')]",
          "apiVersion":"2019-12-01",
          "location":"[parameters('location')]",
-                   "tags": {
+         "tags": {
             "displayName": "runCommand"
           },
          "dependsOn":[
@@ -169,7 +169,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "runCommand"
+            "[concat(parameters('adVMName'),'/firstRunCommand')]"
           ],
           "tags": {
             "displayName": "DeployAD"
