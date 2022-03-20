@@ -169,7 +169,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "[concat(parameters('adVMName'),'/firstRunCommand')]"
+            "runCommand"
           ],
           "tags": {
             "displayName": "DeployAD"
