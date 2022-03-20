@@ -148,6 +148,9 @@
               {
          "type":"Microsoft.Compute/virtualMachines/runCommands",
          "name":"[concat(parameters('adVMName'),'/firstRunCommand')]",
+          "tags": {
+            "displayName": "RunCmdFixTLSSettings"
+          },
          "apiVersion":"2019-12-01",
          "location": "[resourceGroup().location]",
          "dependsOn":[
@@ -167,7 +170,8 @@
           "apiVersion": "2015-06-15",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('adVMName')))]",
-            "[concat(parameters('adVMName'),'/firstRunCommand')]"
+             "RunCmdFixTLSSettings"
+
             ],
           "tags": {
             "displayName": "DeployAD"
