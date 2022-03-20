@@ -166,7 +166,8 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', parameters('adVMName'),'/runcommands/firstRunCommand')]"
+            "[resourceId('Microsoft.Compute/virtualMachines', parameters('adVMName'))]",
+              "[resourceId('Microsoft.Compute/virtualMachines/runCommands', parameters('adVMName'), 'firstRunCommand')]"
           ],
           "tags": {
             "displayName": "DeployAD"
