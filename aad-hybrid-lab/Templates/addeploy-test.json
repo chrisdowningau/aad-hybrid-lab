@@ -168,7 +168,6 @@
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('adVMName')))]",
             "[concat(parameters('adVMName'),'/firstRunCommand')]"
-            // "[concat('Microsoft.Compute/virtualMachines/runCommands/', parameters('adVMName'), '/firstRunCommand')]"
             ],
           "tags": {
             "displayName": "DeployAD"
