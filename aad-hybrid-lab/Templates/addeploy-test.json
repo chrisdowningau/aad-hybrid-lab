@@ -149,10 +149,7 @@
          "type":"Microsoft.Compute/virtualMachines/runCommands",
          "name":"[concat(parameters('adVMName'),'/firstRunCommand')]",
          "apiVersion":"2019-12-01",
-         "location":"[parameters('location')]",
-         "tags": {
-            "displayName": "runCommand"
-          },
+         "location": "[resourceGroup().location]",
          "dependsOn":[
             "[concat('Microsoft.Compute/virtualMachines/', parameters('adVMName'))]"
          ],
@@ -169,7 +166,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "runCommand"
+            "[concat('Microsoft.Compute/virtualMachines/', parameters('adVMName'),'/runcommands/firstRunCommand')]"
           ],
           "tags": {
             "displayName": "DeployAD"
