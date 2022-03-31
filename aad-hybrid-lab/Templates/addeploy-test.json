@@ -189,7 +189,7 @@
         },
               {
          "type":"Microsoft.Compute/virtualMachines/runCommands",
-         "name":"[concat(parameters('adVMName'),'/RebootVM')]",
+         "name":"[concat(parameters('adVMName'),'/RebootVMScheduledTask')]",
          "apiVersion":"2019-12-01",
          "location": "[resourceGroup().location]",
          "dependsOn":[
@@ -198,7 +198,7 @@
          ],
          "properties":{
             "source":{
-               "script": "Restart-Computer -Force"
+               "script": "$delayMin=5;$taskAction = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-noprofile -executionpolicy unrestricted Restart-Computer';$taskTrigger = New-ScheduledTaskTrigger -At ((get-date).AddMinutes($delayMin)) -Once;$taskUser = New-ScheduledTaskPrincipal -UserId 'LOCALSERVICE' -LogonType ServiceAccount;$taskName = 'Scheduled Reboot';$description = 'Forcibly reboot the computer';Register-ScheduledTask -TaskName $taskName -Action $taskAction -Trigger $taskTrigger -Principal $taskUser -Description $description"
             },
             "timeoutInSeconds":20
          }
