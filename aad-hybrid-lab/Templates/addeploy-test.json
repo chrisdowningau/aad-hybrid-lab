@@ -60,7 +60,7 @@
     "adSubnetID": "[concat(variables('vnetID'),'/subnets/', parameters('adSubnetName'))]",
     "imageOffer": "WindowsServer",
     "imagePublisher": "MicrosoftWindowsServer",
-    "imageSKU": "2012-R2-Datacenter",
+    "imageSKU": "2019-Datacenter",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "adPubIPName": "[concat('adPubIP', parameters('deploymentNumber'))]",
     "adNicName": "[concat('ad-',parameters('NetworkInterfaceName'), parameters('deploymentNumber'))]",
@@ -186,7 +186,23 @@
               "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('DeployADTemplate'), ' ', parameters('adDomainName'), ' ', parameters('adminPassword'))]"
             }
           }
-        }
+        },
+              {
+         "type":"Microsoft.Compute/virtualMachines/runCommands",
+         "name":"[concat(parameters('adVMName'),'/RebootVM')]",
+         "apiVersion":"2019-12-01",
+         "location": "[resourceGroup().location]",
+         "dependsOn":[
+            "[concat('Microsoft.Compute/virtualMachines/', parameters('adVMName'))]",
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('adVMName'), 'DeployAD')]"
+         ],
+         "properties":{
+            "source":{
+               "script": "Restart-Computer -Force"
+            },
+            "timeoutInSeconds":20
+         }
+      }
       ]
     }
   ],
