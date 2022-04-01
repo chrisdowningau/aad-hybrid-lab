@@ -75,7 +75,10 @@
         "displayName": "adPubIP"
       },
       "properties": {
-        "publicIPAllocationMethod": "Dynamic"
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[tolower(parameters('adVMName'))]"
+        }
       }
     },
     {
